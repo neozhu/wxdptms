@@ -1,0 +1,42 @@
+<view class="container">
+  <view class="title">
+    <image class="logo" src="https://img.yzcdn.cn/vant/logo.png" />
+    <view class="title-text">TMS</view>
+  </view>
+  <view class="desc">广州鹏捷物流TMS微信小程序</view>
+<van-cell-group>
+  <van-field
+    id="phonenumber"
+    value="{{ phonenumber }}"
+    required
+    clearable
+    label="手机"
+    icon="question-o"
+     bind:change="onChange"
+    placeholder="请输入手机号码"
+  />
+
+  <van-field
+    id="sms"
+    value="{{ sms }}"
+    center
+    clearable
+    label="短信验证码"
+    placeholder="请输入短信验证码"
+    border="{{ false }}"
+    bind:change="onChange"
+    use-button-slot
+  >
+    <van-button slot="button" bind:click="sendsms"  size="small" type="primary">发送验证码</van-button>
+  </van-field>
+</van-cell-group>
+<van-row>
+  <van-col offset="17" span="7">
+    <van-button type="default" icon="user-o" bind:click="vaildate" >登录</van-button>
+  </van-col>
+   
+</van-row>
+
+</view>
+<van-toast id="van-toast" />
+<van-notify id="van-notify" />

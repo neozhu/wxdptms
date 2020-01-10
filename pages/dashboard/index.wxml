@@ -1,0 +1,45 @@
+<view class="container">
+  <view class="title">
+    <image class="logo" src="https://img.yzcdn.cn/vant/logo.png" />
+    <view class="title-text">TMS</view>
+  </view>
+  <view class="desc">广州鹏捷物流TMS微信小程序</view>
+
+  <van-grid clickable='true'>
+  <van-grid-item bind:click="onClick" id="110" clickable icon="send-gift-o"  text="等待配送" info="99"  />
+  <van-grid-item bind:click="onClick" id="120" clickable icon="logistics"  text="在途" dot />
+  <van-grid-item bind:click="onClick" id="170" clickable icon="passed"  text="已经完成" info="99"/>
+  <van-grid-item bind:click="onClick" id="140" clickable icon="volume-o" text="异常" info="99"/>
+</van-grid>
+ 
+ 
+<van-card wx:for="{{ list }}" wx:key="ID" wx:for-index="ID"
+  num="{{item.TOTALCASECNT}} 件"
+  tag="{{item.STATUS=='110'?'新':''}}"
+  title="{{item.SHIPORDERKEY}}"
+>
+<view slot="tags">
+  <van-tag plain type="danger"> {{item.TYPE}} </van-tag>
+  <van-tag plain type="primary"> {{item.STATUSMS}} </van-tag>
+</view>
+ <view slot="desc">
+   <view><van-icon name="location-o" /> {{item.ORIGINAL}} -> {{item.DESTINATION}} </view>
+   <view><van-icon name="clock-o" /> 要求送达时间：{{item.DELIVERYDATEFM}} </view>
+   <view><van-icon name="clock-o" /> 车牌：{{item.PLATENUMBER}} </view>
+   <view> <van-tag round type="{{item.STATE?'danger':'success'}}">{{item.STATEMS}}</van-tag>  </view>
+  </view>
+  <view slot="footer">
+  <block wx:if="{{item.STATUS=='110'}}">
+    <van-button bind:click="doshipping" type="primary" data-id="{{item.ID}}" data-orderkey="{{item.SHIPORDERKEY}}"  data-status="{{item.STATUS}}" size="small" icon="logistics">发运</van-button>
+  </block>
+  <block wx:if="{{item.STATUS=='120'}}">
+    <van-button bind:click="docompleted" type="info" data-id="{{item.ID}}" data-orderkey="{{item.SHIPORDERKEY}}"  data-status="{{item.STATUS}}" size="small" icon="passed">完成</van-button>
+  </block>
+  <block wx:if="{{item.STATUS=='170'}}">
+    <van-button bind:click="doclosed" type="info" data-id="{{item.ID}}" data-orderkey="{{item.SHIPORDERKEY}}" data-status="{{item.STATUS}}" size="small" icon="completed">上传POD</van-button>
+  </block>
+  </view>
+</van-card>
+</view>
+<van-toast id="van-toast" />
+<van-notify id="van-notify" />
